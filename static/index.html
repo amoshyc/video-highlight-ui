@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .nav>.nav-item>a {
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+        }
+
+        .nav>.nav-item>a.active {
+            border-bottom: 1px solid cornflowerblue;
+        }
+
+
+        #video {
+            width: 800px;
+            height: 450px;
+        }
+    </style>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous">
+
+    <!--video js css-->
+    <link href="http://vjs.zencdn.net/6.2.0/video-js.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row mt-3">
+
+            <!--left column-->
+            <div class="col d-flex flex-column">
+
+                <!--video-->
+                <video id="video" class="video-js" controls preload="auto" data-setup='{ "playbackRates": [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2] }'>
+                    <source src="sub.mp4" type='video/mp4'>
+                </video>
+
+                <!--buttons-->
+                <div class="d-flex flex-row mt-3 p-1">
+                    <div class="btn-toolbar mb-3">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">Segment Start (s)</button>
+                            <button type="button" class="btn btn-success">Segment End (e)</button>
+                        </div>
+                        <button type="button" class="btn btn-danger ml-2">Clear Label (c)</button>
+                        <button type="button" class="btn btn-secondary ml-3">Hotkey (?)</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--right column-->
+            <div class="col">
+
+                <!--Nav tabs-->
+                <ul class="nav" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#info" role="tab">Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#labels" role="tab">Labels</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#status" role="tab">Status</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content my-3">
+                    <!--info pane-->
+                    <div class="tab-pane active" id="info" role="tabpanel">
+                    </div>
+                    <!--label pane-->
+                    <div class="tab-pane" id="labels" role="tabpanel">
+                    </div>
+                    <!--status pane-->
+                    <div class="tab-pane" id="status" role="tabpanel">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- jQuery first, then Tether, then Bootstrap JS. -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+
+    <!--video.js-->
+    <script src="http://vjs.zencdn.net/6.2.0/video.js"></script>
+
+    <!--keymaster.js-->
+    <script src="keymaster.js"></script>
+
+    <!--my script-->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
