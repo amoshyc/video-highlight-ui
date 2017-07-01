@@ -3,14 +3,13 @@
 
 <head>
     <style>
-        .nav>.nav-item>a {
+        ul.nav {
             border-bottom: 1px solid rgba(0, 0, 0, .125);
         }
 
-        .nav>.nav-item>a.active {
-            border-bottom: 1px solid cornflowerblue;
+        #labels-table td:nth-child(3) {
+            text-align: center;
         }
-
 
         #video {
             width: 800px;
@@ -29,83 +28,85 @@
     <!--video js css-->
     <link href="http://vjs.zencdn.net/6.2.0/video-js.css" rel="stylesheet">
 
+    <!--jquery ui-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
+
 </head>
 
 <body>
     <div class="container-fluid">
-        <div class="row mt-3">
+        <div class="row mt-3 d-flex justify-content-center">
 
             <!--left column-->
             <div class="col d-flex flex-column">
 
                 <!--video-->
-                <video id="video" class="video-js" controls preload="auto" data-setup='{ "playbackRates": [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2] }'>
-                    <source src="sub.mp4" type='video/mp4'>
-                </video>
+                <div class="d-flex justify-content-center">
+                    <video id="video" class="video-js vjs-default-skin" controls autoplay loop preload="auto" data-setup='{ "playbackRates": [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2] }'>
+                    </video>
+                </div>
 
                 <!--buttons-->
-                <div class="d-flex flex-row mt-3 p-1">
-                    <div class="btn-toolbar mb-3">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-primary">Segment Start (s)</button>
-                            <button type="button" class="btn btn-success">Segment End (e)</button>
-                        </div>
-                        <button type="button" class="btn btn-danger ml-2">Clear Label (c)</button>
-                        <button type="button" class="btn btn-secondary ml-3">Hotkey (?)</button>
+                <div class="d-flex mt-3 justify-content-center mb-5">
+                    <div class="btn-group">
+                        <button id="segment-start-btn" type="button" class="btn btn-primary" onclick="click_segment_start_btn()">
+                                    Segment Start (s)
+                            </button>
+                        <button id="segment-end-btn" type="button" class="btn btn-success" onclick="click_segment_end_btn()">
+                                    Segment End (e)
+                            </button>
                     </div>
+                    <button id="clear-label-btn" type="button" class="btn btn-danger ml-2">Clear Label (c)</button>
+                    <button type="button" class="btn btn-secondary ml-3">Help (?)</button>
                 </div>
 
             </div>
 
             <!--right column-->
-            <div class="col">
-
-                <!--Nav tabs-->
-                <ul class="nav" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#info" role="tab">Info</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#labels" role="tab">Labels</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#status" role="tab">Status</a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content my-3">
-                    <!--info pane-->
-                    <div class="tab-pane active" id="info" role="tabpanel">
-                    </div>
-                    <!--label pane-->
-                    <div class="tab-pane" id="labels" role="tabpanel">
-                    </div>
-                    <!--status pane-->
-                    <div class="tab-pane" id="status" role="tabpanel">
-                    </div>
+            <div class="col-lg-3">
+                <div style="max-height: 450px; overflow-y: auto">
+                    <table id='labels-table' class="table table-hover table-bordered pagin-table">
+                        <thead>
+                            <tr>
+                                <th width="40%">Start</th>
+                                <th width="40%">End</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
+
+                <div class="d-flex justify-content-end mt-4">
+                    <button id="preview" type="button" class="btn btn-primary">
+                        Preview
+                    </button>
+                    <button id="preview" type="button" class="btn btn-success ml-2">
+                        Crop
+                    </button>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-    <!-- jQuery first, then Tether, then Bootstrap JS. -->
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-        crossorigin="anonymous"></script>
+        <!-- jQuery first, then Tether, then Bootstrap JS. -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+            crossorigin="anonymous"></script>
 
-    <!--video.js-->
-    <script src="http://vjs.zencdn.net/6.2.0/video.js"></script>
+        <!--video.js and youtube plugin-->
+        <script src="http://vjs.zencdn.net/6.2.0/video.js"></script>
+        <script src="Youtube.min.js"></script>
 
-    <!--keymaster.js-->
-    <script src="keymaster.js"></script>
+        <!--keymaster.js-->
+        <script src="keymaster.js"></script>
 
-    <!--my script-->
-    <script src="script.js"></script>
+        <!--my script-->
+        <script src="script.js"></script>
 
 </body>
 
