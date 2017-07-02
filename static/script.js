@@ -87,23 +87,28 @@ function video_preview() {
 
     var idx = 0;
     function time_update() {
-        console.log('u');
         if (player.currentTime() >= ends[idx]) {
             player.pause();
-            console.log(idx);
             idx += 1;
             if (idx >= starts.length) {
                 player.off('timeupdate', time_update);
+                $('#' + ids[ids.length - 1]).css('color', 'black');
             }
             else {
                 player.currentTime(starts[idx]);
+                $('#' + ids[idx - 1]).css('color', 'black');
+                $('#' + ids[idx]).css('color', 'cornflowerblue');
                 player.play();
             }
         }
     }
 
     $('#preview-btn').blur();
+
     player.currentTime(starts[0]);
+    $('#' + ids[0]).css('color', 'cornflowerblue');
+    player.play();
+
     player.on('timeupdate', time_update);
 }
 
