@@ -48,12 +48,14 @@
                 <!--buttons-->
                 <div class="d-flex mt-3 justify-content-center mb-5">
                     <button id="segment-start-btn" type="button" class="btn btn-secondary" onclick="click_segment_start_btn()">
-                                    Segment Start (s)
-                            </button>
+                            Segment Start (s)
+                    </button>
                     <button id="segment-end-btn" type="button" class="btn btn-secondary ml-3" onclick="click_segment_end_btn()">
-                                    Segment End (e)
-                            </button>
-                    <button type="button" class="btn btn-secondary ml-3">Help (?)</button>
+                            Segment End (e)
+                    </button>
+                    <button type="button" class="btn btn-secondary ml-3" data-toggle="modal" data-target="#help-modal">
+                        Help (?)
+                    </button>
                 </div>
 
             </div>
@@ -94,6 +96,25 @@
                     </button>
                 </div>
 
+            </div>
+        </div>
+
+        <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="help-modal-title">Help</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
 

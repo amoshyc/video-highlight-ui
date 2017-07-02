@@ -74,28 +74,37 @@ function video_preview() {
     var data = $('#labels-table tbody tr').get();
     var starts = [];
     var ends = [];
+    var ids = [];
+    if (data.length == 0) {
+        return;
+    }
+
     $.each(data, function (idx, row) {
         starts.push(parseFloat($(row).children('td').eq(0).text()));
         ends.push(parseFloat($(row).children('td').eq(1).text()));
+        ids.push($(row).attr('id'));
     });
 
-    function segment(idx) {
-        if (idx >= starts.length) {
-            return;
-        }
-
-        player.currentTime(starts[idx]);
-        player.play();
-        var duration = Math.round((ends[idx] - starts[idx]) * 1000);
-        setTimeout(function () {
+    var idx = 0;
+    function time_update() {
+        console.log('u');
+        if (player.currentTime() >= ends[idx]) {
             player.pause();
-            segment(idx + 1);
-        }, duration + 200);
+            console.log(idx);
+            idx += 1;
+            if (idx >= starts.length) {
+                player.off('timeupdate', time_update);
+            }
+            else {
+                player.currentTime(starts[idx]);
+                player.play();
+            }
+        }
     }
 
-    setTimeout(function () {
-        segment(0);
-    }, 200);
+    $('#preview-btn').blur();
+    player.currentTime(starts[0]);
+    player.on('timeupdate', time_update);
 }
 
 function init_keymap() {
