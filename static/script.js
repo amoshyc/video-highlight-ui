@@ -118,10 +118,10 @@ function init_keymap() {
     key('e', click_segment_end_btn);
     key('k', video_toggle_pause);
     key('l', function () {
-        increase_video_time(+10);
+        increase_video_time(+5);
     });
     key('j', function () {
-        increase_video_time(-10);
+        increase_video_time(-5);
     });
 }
 
