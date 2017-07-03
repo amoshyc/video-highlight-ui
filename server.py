@@ -48,8 +48,7 @@ def main():
 
         video_src = str(path)
         video_type = path.suffix[1:]
-
-    else:
+    else:  # arg is url
         video_src = args.path
         video_type = 'youtube'
 

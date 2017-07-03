@@ -5,6 +5,7 @@ var clear_btn = $('#clear-label-btn');
 var current_row = 0;
 
 function click_segment_start_btn() {
+    // round time to format %.3f
     var t = Math.round(player.currentTime() * 1000.0) / 1000.0;
 
     var btn_template =
@@ -16,10 +17,10 @@ function click_segment_start_btn() {
         '<td>' + btn_template + '</td>';
 
     var elem = $('#row' + current_row);
-    if (elem.length) {
+    if (elem.length) { // when re-click segment start while segment end is empty
         elem.html(item_template);
     }
-    else {
+    else { // new label
         var new_row =
             '<tr id="row' + current_row + '">' +
             item_template +
@@ -43,7 +44,7 @@ function remove_row(id) {
     $('#row' + id).remove();
 }
 
-function sort_labels_by_column(idx) {
+function sort_labels_by_column(idx) { // idx=0: start; idx=1: end
     var data = $('#labels-table tbody tr').get();
     data.sort(function (a, b) {
         var value_a = parseFloat($(a).children('td').eq(idx).text());
@@ -71,11 +72,12 @@ function video_toggle_pause() {
 }
 
 function video_preview() {
+    // get times
     var data = $('#labels-table tbody tr').get();
     var starts = [];
     var ends = [];
     var ids = [];
-    if (data.length == 0) {
+    if (data.length == 0) { // no labels
         return;
     }
 
@@ -85,6 +87,7 @@ function video_preview() {
         ids.push($(row).attr('id'));
     });
 
+    // play each segment by changing player time to start and detect end by time_update
     var idx = 0;
     function time_update() {
         if (player.currentTime() >= ends[idx]) {
@@ -103,12 +106,15 @@ function video_preview() {
         }
     }
 
+    // prevent pressing space to trigger preivew again
     $('#preview-btn').blur();
 
+    // play the firt segment
     player.currentTime(starts[0]);
     $('#' + ids[0]).css('color', 'cornflowerblue');
     player.play();
 
+    // register time update
     player.on('timeupdate', time_update);
 }
 
@@ -126,9 +132,7 @@ function init_keymap() {
 }
 
 $(function () {
-    // player.src({ type: 'video/youtube', src: 'https://www.youtube.com/watch?v=DBW-wq5eARI&list=PLOSE0y-rB2eCpnmkrgSPMkLecg9q1h-pe' });
-    // player.src({ type: 'video/mp4', src: 'sub.mp4' });
-
+    // make labels sortable(drag & drop)
     $('#labels-table > tbody').sortable({
         theme: "bootstrap"
     });
