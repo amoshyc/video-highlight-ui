@@ -127,7 +127,7 @@ function init_keymap() {
 
 $(function () {
     // player.src({ type: 'video/youtube', src: 'https://www.youtube.com/watch?v=DBW-wq5eARI&list=PLOSE0y-rB2eCpnmkrgSPMkLecg9q1h-pe' });
-    player.src({ type: 'video/mp4', src: 'sub.mp4' });
+    // player.src({ type: 'video/mp4', src: 'sub.mp4' });
 
     $('#labels-table > tbody').sortable({
         theme: "bootstrap"
