@@ -6,6 +6,7 @@
         /*#right-col .icon-container {
             padding: 0;
         }*/
+
         #right-col .icon-container i {
             font-size: 20px;
         }
@@ -94,20 +95,25 @@
                         </div>
                     </div>
 
+                    <div class="dropup ml-2">
+                        <button class="btn btn-success" type="button" id="io" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            IO
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="io">
+                            <label class="btn btn-success dropdown-item" for="file-chooser">
+                                <input id="file-chooser" type="file" style="display:none;" accept='text/json' onchange="upload_labels()">
+                                上傳
+                            </label>
+
+                            <a id="download-a" class="dropdown-item" href="" download="" onclick="download_labels()" style="display:block">
+                                下載
+                            </a>
+                        </div>
+                    </div>
+
                     <button id="preview-btn" type="button" class="btn btn-primary ml-2" onclick="video_preview()">
                         Preview
-                    </button> 
-
-                    <label class="btn btn-success ml-2 mb-0" for="file-chooser">
-                        <input id="file-chooser" type="file" style="display:none;" accept='text/json' onchange="upload_labels()">
-                        上傳
-                    </label>
-
-                    <a id="download-a" href="" download="" onclick="download_labels()" style="display:block">
-                        <button id="download-btn" type="button" class="btn btn-success ml-2">
-                            下載
-                        </button>
-                    </a>
+                    </button>
 
                 </div>
 
