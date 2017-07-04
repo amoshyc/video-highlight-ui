@@ -19,11 +19,14 @@ function click_segment_start_btn() {
         '<td></td>' +
         '<td>' + btn_template + '</td>';
 
-    var elem = $('#row' + current_row);
-    if (elem.length) { // when re-click segment start while segment end is empty
+    var exist_row = $('#row' + current_row).length > 0;
+    var exist_end = $('#row' + current_row + ' > td:nth-child(2)').text() != '';
+    if (exist_row && !exist_end) { // when re-click segment start while segment end is empty
+        var elem = $('#row' + current_row);
         elem.html(item_template);
     }
     else { // new label
+        current_row += 1;
         var new_row =
             '<tr id="row' + current_row + '">' +
             item_template +
@@ -38,8 +41,7 @@ function click_segment_end_btn() {
 
     var elem = $('#row' + current_row + ' > td:nth-child(2)');
     if (elem.length) {
-        elem.append(t);
-        current_row += 1;
+        elem.html(t);
     }
 }
 
