@@ -2,6 +2,7 @@ var player = videojs('video');
 var seg_start_btn = $('#segment-start-btn');
 var seg_end_btn = $('#segment-end-btn');
 var download_a = $('#download-a');
+var file_chooser = $('#file-chooser');
 var current_row = 0;
 var is_preview = false;
 var info;
@@ -159,7 +160,39 @@ function init_info() {
 }
 
 function upload_labels() {
-    ;
+    var files = file_chooser.prop('files');
+    if (files && files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            console.log(e.target.result);
+            var b64 = e.target.result.split(',', 2)[1];
+            var data = JSON.parse(window.atob(b64));
+
+            document.title = data['video_src'];
+            var tbody = $('#labels-table tbody');
+            tbody.children('tr').remove();
+
+            var starts = data['starts'];
+            var ends = data['ends'];
+            for (var idx in starts) {
+                var btn_template =
+                    '<button type="button" class="btn btn-outline-danger btn-sm" ' +
+                    'onclick="remove_row(' + idx + ')">x</button>';
+                var item_template =
+                    '<td>' + starts[idx] + '</td>' +
+                    '<td>' + ends[idx] + '</td>' +
+                    '<td>' + btn_template + '</td>';
+                var new_row =
+                    '<tr id="row' + idx + '">' +
+                    item_template +
+                    '</tr>';
+                tbody.append(new_row);
+            }
+        }
+
+        reader.readAsDataURL(files[0]);
+    }
 }
 
 function download_labels() {
