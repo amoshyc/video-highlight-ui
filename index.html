@@ -90,11 +90,19 @@
 
                     <button id="preview-btn" type="button" class="btn btn-primary ml-2" onclick="video_preview()">
                         Preview
-                    </button>
+                    </button> 
 
-                    <button id="crop-btn" type="button" class="btn btn-success ml-2" onclick="clip_trigger()">
-                        Clip
-                    </button>
+                    <label class="btn btn-success ml-2 mb-0" for="file-chooser" onclic="upload_labels()">
+                        <input id="file-chooser" type="file" style="display:none;" accept='text/json'>
+                        U
+                    </label>
+
+                    <a id="download-a" href="" download="" onclick="download_labels()">
+                        <button id="download-btn" type="button" class="btn btn-success ml-2">
+                            D
+                        </button>
+                    </a>
+
                 </div>
 
             </div>

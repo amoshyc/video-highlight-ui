@@ -1,11 +1,13 @@
 var player = videojs('video');
 var seg_start_btn = $('#segment-start-btn');
 var seg_end_btn = $('#segment-end-btn');
-var clear_btn = $('#clear-label-btn');
+var download_a = $('#download-a');
 var current_row = 0;
+var is_preview = false;
+var info;
 
 function click_segment_start_btn() {
-    // round time to format %.3f
+    // round time to format .3f
     var t = Math.round(player.currentTime() * 1000.0) / 1000.0;
 
     var btn_template =
@@ -59,7 +61,7 @@ function get_labels() {
         ids.push($(row).attr('id'));
     });
 
-    return [starts, ends, ids]
+    return [starts, ends, ids];
 }
 
 function sort_labels_by_column(idx) { // idx=0: start; idx=1: end
@@ -95,6 +97,14 @@ function video_preview() {
     var ends = labels[1];
     var ids = labels[2];
 
+    if (is_preview) { // if previous preview is not complete
+        is_preview = false;
+        player.off('timeupdate', time_update);
+        $.each(ids, function (idx, id) {
+            $('#' + id).css('color', 'black');
+        });
+    }
+
     // play each segment by changing player time to start and detect end by time_update
     var idx = 0;
     function time_update() {
@@ -104,6 +114,7 @@ function video_preview() {
             if (idx >= starts.length) {
                 player.off('timeupdate', time_update);
                 $('#' + ids[ids.length - 1]).css('color', 'black');
+                is_preview = false;
             }
             else {
                 player.currentTime(starts[idx]);
@@ -121,21 +132,10 @@ function video_preview() {
     player.currentTime(starts[0]);
     $('#' + ids[0]).css('color', 'cornflowerblue');
     player.play();
+    is_preview = true;
 
     // register time update
     player.on('timeupdate', time_update);
-}
-
-function clip_trigger() {
-    var labels = get_labels();
-    var data = {
-        'starts': labels[0],
-        'ends': labels[1]
-    }
-
-    $.post('/clip_trigger', JSON.stringify(data), function() {
-        console.log('start clipping');
-    });
 }
 
 function init_keymap() {
@@ -151,11 +151,43 @@ function init_keymap() {
     });
 }
 
-$(function () {
-    // make labels sortable(drag & drop)
-    $('#labels-table > tbody').sortable({
-        theme: "bootstrap"
+function init_info() {
+    $.post('/info', null, function (res) {
+        info = JSON.parse(res);
+        document.title = info.video_src;
+    });
+}
+
+function upload_labels() {
+    ;
+}
+
+function download_labels() {
+    var labels = get_labels();
+    if (labels[0].length == 0) {
+        return;
+    }
+
+    var data = JSON.stringify({
+        'video_src': info.video_src,
+        'video_type': info.video_type,
+        'starts': labels[0],
+        'ends': labels[1]
     });
 
+    console.log(data);
+    var d = new Date();
+    var date = d.toISOString().substring(0, 10);
+    var time = d.toTimeString().substring(0, 8);
+
+    download_a.attr('href', 'data:text/plain;charset=UTF-8,' + data);
+    download_a.attr('download', (date + ' ' + time) + '.json');
+}
+
+$(function () {
+    // make labels sortable(drag & drop)
+    $('#labels-table > tbody').sortable();
+
+    init_info();
     init_keymap();
 });
