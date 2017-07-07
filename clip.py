@@ -1,4 +1,7 @@
 import argparse
+import pathlib
+import json
+import sys
 from moviepy.editor import VideoFileClip, concatenate_videoclips
 
 def clip(video_src, video_type, starts, ends):
@@ -9,6 +12,9 @@ def clip(video_src, video_type, starts, ends):
     # result.write_videofile(str(result_path), threads=3)
     result.write_videofile(str(result_path))
 
+    to_frame = VideoFileClip(str(result_path)) # new
+    to_frame.write_images_sequence('../frame/frame%04d.jpg') # new
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -16,10 +22,10 @@ def main():
     args = parser.parse_args()
 
     with open(args.path, 'r') as f:
-        data = json.load(f.read())
-    
-    video_src = data['source']
-    video_type = data['type']
+        data = json.loads(f.read()) # change
+
+    video_src = data['video_src']
+    video_type = data['video_type']
     starts = data['starts']
     ends = data['ends']
 
