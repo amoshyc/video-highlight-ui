@@ -6,27 +6,34 @@ var file_chooser = $('#file-chooser');
 var current_row = 0;
 var is_preview = false;
 var info;
+var row_complete = false;
 
 function click_segment_start_btn() {
     // round time to format .3f
     var t = Math.round(player.currentTime() * 1000.0) / 1000.0;
 
-    var btn_template =
-        '<button type="button" class="btn btn-outline-danger btn-sm" ' +
-        'onclick="remove_row(' + current_row + ')">x</button>';
-    var item_template =
-        '<td>' + t + '</td>' +
-        '<td></td>' +
-        '<td>' + btn_template + '</td>';
-
     var exist_row = $('#row' + current_row).length > 0;
-    var exist_end = $('#row' + current_row + ' > td:nth-child(2)').text() != '';
-    if (exist_row && !exist_end) { // when re-click segment start while segment end is empty
+    if (exist_row && !row_complete) { // when re-click segment start while segment end is empty
+        var btn_template =
+            '<button type="button" class="btn btn-outline-danger btn-sm" ' +
+            'onclick="remove_row(' + (current_row) + ')">x</button>';
+        var item_template =
+            '<td>' + t + '</td>' +
+            '<td></td>' +
+            '<td>' + btn_template + '</td>';
+
         var elem = $('#row' + current_row);
         elem.html(item_template);
     }
     else { // new label
         current_row += 1;
+        var btn_template =
+            '<button type="button" class="btn btn-outline-danger btn-sm" ' +
+            'onclick="remove_row(' + current_row + ')">x</button>';
+        var item_template =
+            '<td>' + t + '</td>' +
+            '<td></td>' +
+            '<td>' + btn_template + '</td>';
         var new_row =
             '<tr id="row' + current_row + '">' +
             item_template +
@@ -34,6 +41,8 @@ function click_segment_start_btn() {
         $('#labels-table > tbody').append(new_row);
         $('#scroll-container').scrollTop(9999);
     }
+
+    row_complete = false;
 }
 
 function click_segment_end_btn() {
@@ -41,6 +50,7 @@ function click_segment_end_btn() {
 
     var elem = $('#row' + current_row + ' > td:nth-child(2)');
     if (elem.length) {
+        row_complete = true;
         elem.html(t);
     }
 }
