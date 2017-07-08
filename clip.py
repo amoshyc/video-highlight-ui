@@ -9,19 +9,16 @@ def clip(video_src, video_type, starts, ends):
     clips = [video.subclip(s, e) for s, e in zip(starts, ends)]
     result = concatenate_videoclips(clips)
     result_path = pathlib.Path(video_src).parent / 'clip.{}'.format(video_type)
-    # result.write_videofile(str(result_path), threads=3)
-    result.write_videofile(str(result_path))
-
-    to_frame = VideoFileClip(str(result_path)) # new
-    to_frame.write_images_sequence('../frame/frame%04d.jpg') # new
+    result.write_videofile(str(result_path), threads=3)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('path', help="path/to/label/file")
     args = parser.parse_args()
+    path = pathlib.Path(args.path).expanduser().absolute()
 
-    with open(args.path, 'r') as f:
+    with open(str(path), 'r') as f:
         data = json.loads(f.read()) # change
 
     video_src = data['video_src']
