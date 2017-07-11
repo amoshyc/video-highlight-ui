@@ -190,7 +190,7 @@ function upload_labels() {
             for (var idx in starts) {
                 var btn_template =
                     '<button type="button" class="btn btn-outline-danger btn-sm" ' +
-                    'onclick="remove_row(' + idx + ')">x</button>';
+                    'onclick="remove_row(' + (idx + 1) + ')">x</button>';
                 var item_template =
                     '<td>' + starts[idx] + '</td>' +
                     '<td>' + ends[idx] + '</td>' +
