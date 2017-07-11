@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip
 
 def main():
     path = Path(argv[1])
-    video = Videoprogress_barFileClip(str(path))
+    video = VideoFileClip(str(path))
 
     target = (path.parent / 'frames')
     target.mkdir(exist_ok=True)
